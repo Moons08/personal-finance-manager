@@ -1,17 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- ---------------------------------------------------------------------------------------- -->
 <div class="container my-3">
-    <table class="table">
-        <thead>
-            <tr class="thead-dark">
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일시</th>
+    {% if asset_list %}
+    <ul>
+        <table border="1">
+            <th>ticker</th>
+            <th>price</th>
+            <th>shares</th>
+            <th class="btn-outline-secondary">수정</th>
+            <th class="btn-outline-secondary">삭제</th>
+            {% for asset in asset_list %}
+            <tr>
+                <td>{{ asset.ticker }}</td>
+                <td>{{ asset.price }}</td>
+                <td>{{ asset.shares }}</td>
+                <td class="modify"><a href={% url 'finance_manager:asset_modify' asset.id  %}> [ 👻 ] </a>
+                </td>
+                <td class="delete"><a href={% url 'finance_manager:asset_delete' asset.id  %}> [ 👺 ] </a></td>
             </tr>
-        </thead>
-        </tbody>
-    </table>
+            {% endfor %}
+        </table>
+    </ul>
+    {% else %}
+    <p>자산이 없습니다.</p>
+    {% endif %}
 </div>
-<!-- ---------------------------------------- [edit] ---------------------------------------- -->
+
+<a href=asset/create>자산등록</a>
+
+
 {% endblock %}
