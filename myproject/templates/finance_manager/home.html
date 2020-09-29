@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- ---------------------------------------------------------------------------------------- -->
 <div class="container my-3">
-    <table class="table">
-        <thead>
-            <tr class="thead-dark">
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일시</th>
-            </tr>
-        </thead>
-        </tbody>
-    </table>
+    {% if asset_list %}
+    <ul>
+        <table border="1">
+            <th>ticker</th>
+            <th>price</th>
+            <th>shares</th>
+            {% for asset in asset_list %}
+            <tr>
+                <!-- 첫번째 줄 시작 -->
+                <td>{{ asset.ticker }}</td>
+                <td>{{ asset.price }}</td>
+                <td>{{ asset.shares }}</td>
+            </tr><!-- 첫번째 줄 끝 -->
+            {% endfor %}
+        </table>
+    </ul>
+    {% else %}
+    <p>자산이 없습니다.</p>
+    {% endif %}
 </div>
-<!-- ---------------------------------------- [edit] ---------------------------------------- -->
+
+<a href=asset/create>자산등록</a>
+
 {% endblock %}
