@@ -7,13 +7,17 @@
             <th>ticker</th>
             <th>price</th>
             <th>shares</th>
+            <th class="btn-outline-secondary">수정</th>
+            <th class="btn-outline-secondary">삭제</th>
             {% for asset in asset_list %}
             <tr>
-                <!-- 첫번째 줄 시작 -->
                 <td>{{ asset.ticker }}</td>
                 <td>{{ asset.price }}</td>
                 <td>{{ asset.shares }}</td>
-            </tr><!-- 첫번째 줄 끝 -->
+                <td class="modify"><a href={% url 'finance_manager:asset_modify' asset.id  %}> [ 👻 ] </a>
+                </td>
+                <td class="delete"><a href={% url 'finance_manager:asset_delete' asset.id  %}> [ 👺 ] </a></td>
+            </tr>
             {% endfor %}
         </table>
     </ul>
@@ -23,5 +27,6 @@
 </div>
 
 <a href=asset/create>자산등록</a>
+
 
 {% endblock %}
