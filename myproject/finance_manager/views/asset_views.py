@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
 from finance_manager.models.asset import Asset
 from ..forms import AssetForm
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url="common:login")
 def asset_create(request):
     """
     자산 등록
@@ -14,6 +16,7 @@ def asset_create(request):
         form = AssetForm(request.POST)
         if form.is_valid():
             asset = form.save(commit=False)
+            asset.user = request.user
             asset.save()
             return redirect("/")
     else:
@@ -24,19 +27,22 @@ def asset_create(request):
     return render(request, "finance_manager/asset_form.html", context)
 
 
-def asset_read(request, asset_id):
+@login_required(login_url="common:login")
+def asset_read(request):
     """
     자산 출력
     """
     # TODO: generic - table view
-    asset = get_object_or_404(Asset, pk=asset_id)
-    serialized_obj = serializers.serialize(
-        "json",
-        [asset],
-    )
-    return HttpResponse(serialized_obj)
+    asset = Asset.objects.filter(user=request.user)
+    asset = get_list_or_404(asset)
+    # serialized_obj = serializers.serialize(
+    #     "json",
+    #     [asset],
+    # )
+    return HttpResponse(asset)
 
 
+@login_required(login_url="common:login")
 def asset_modify(request, asset_id):
     """
     자산 수정
@@ -55,6 +61,7 @@ def asset_modify(request, asset_id):
     return render(request, "finance_manager/asset_form.html", context)
 
 
+@login_required(login_url="common:login")
 def asset_delete(request, asset_id):
     """
     자산 삭제
