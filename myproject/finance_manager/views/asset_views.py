@@ -11,8 +11,48 @@ from finance_manager.serializers.asset import (
     USStockSerializer,
     KOStockSerializer,
     AssetSerializer,
+    ExpectAssetSerializer,
 )
 from . import LargeResultsSetPagination
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import serializers
+import json
+
+
+@api_view(["POST", "GET"])
+@csrf_exempt
+def get_expect_asset(request):
+    """
+    {
+        "way": "적립식",
+        "period": 20,
+        "asset": 2000,
+        "interest": 1.12
+    }
+    """
+    if request.method == "GET":
+        serializer = ExpectAssetSerializer()
+        return Response(serializer.data)
+    else:
+
+        data = request.data
+        a = data["asset"]
+        r = data["interest"]
+        n = data["period"]
+
+        if data["way"] == "적립식":
+            for i in range(1, n + 1):
+                data[f"{i}y_expect"] = (
+                    int(a * r) if i == 1 else int(a * (r ** i - 1) / (r - 1))
+                )
+        else:
+            for i in range(1, n + 1):
+                data[f"{i}y_expect"] = int(a * (r ** i))
+
+        return Response(data=data)
 
 
 class BaseViewSet(viewsets.ModelViewSet):
