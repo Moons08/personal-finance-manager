@@ -2,15 +2,19 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import user_views, article_views
+from .views import user_views, article_views, asset_views
 
 # app_name = "fm"
 
-# Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r"users", user_views.UserViewSet)
+# board
 router.register(r"articles", article_views.ArticleViewSet)
 router.register(r"comments", article_views.CommentViewSet)
+# assets
+router.register(r"assets", asset_views.AssetViewSet)
+router.register(r"usstocks", asset_views.USStockViewSet)
+router.register(r"kostocks", asset_views.KOStockViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
