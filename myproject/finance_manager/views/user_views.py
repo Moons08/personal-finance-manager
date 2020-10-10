@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from rest_framework import generics
 from finance_manager.serializers.user import UserSerializer
 
 from rest_framework import viewsets
