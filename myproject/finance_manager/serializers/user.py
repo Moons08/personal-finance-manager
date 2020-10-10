@@ -41,3 +41,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             # "usstock",
             # "kostock",
         ]
+        ordering = ["id"]
