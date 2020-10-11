@@ -40,17 +40,24 @@ class AssetSerializer(serializers.HyperlinkedModelSerializer):
 
 class ExpectAssetSerializer(serializers.Serializer):
     """
-    방식(거치, 적립, 복합)
-    기간(연/월?)
-    기대이율(수익률)
-
-    2way
-    목표액 입력 -> 추천 방식/기간/이율 산출
-    방식/기간/이율 입력 -> 결과 산출
-    해당 기간의 자본금 변화 시각화
+    {
+        "present_value": 5000,
+        "future_value": 5500,
+        "monthly_input": 150,
+        "interest": 0.12,
+        "year": null
+    }
+    {
+        "present_value": 5000,
+        "future_value": null,
+        "monthly_input": 150,
+        "interest": 0.12,
+        "year": 3
+    }
     """
 
-    way = serializers.ChoiceField(choices=[(1, "적립식"), (2, "거치식")])
-    period = serializers.IntegerField()
-    asset = serializers.IntegerField()
-    interest = serializers.FloatField()
+    present_value = serializers.FloatField(initial=5000)
+    future_value = serializers.FloatField()
+    monthly_input = serializers.IntegerField(initial=100)
+    interest = serializers.FloatField(initial=12)  # percent
+    year = serializers.IntegerField(initial=3)
