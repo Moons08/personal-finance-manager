@@ -9,25 +9,36 @@ class Asset(models.Model):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+        "auth.User", related_name="assets", on_delete=models.CASCADE
     )
+    name = models.CharField(max_length=100)
+
+
+class Stock(models.Model):
     ticker = models.CharField(max_length=10)
     price = models.FloatField()
     shares = models.FloatField()
 
     def __str__(self):
-        return self.ticker
+        return f"{self.ticker} {self.price*self.shares}"
 
-    # class Meta:
-    #     abstract = True
-
-
-# class USStock(Asset):
-#     pass
+    class Meta:
+        abstract = True
 
 
-# class KOStock(Asset):
-#     pass
+# TODO: related_name 클래스명으로 자동지정 ex) f"class_name"
+class USStock(Stock):
+    asset = models.ForeignKey(Asset, related_name="usstock", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "auth.User", related_name="usstock", on_delete=models.CASCADE
+    )
+
+
+class KOStock(Stock):
+    asset = models.ForeignKey(Asset, related_name="kostock", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "auth.User", related_name="kostock", on_delete=models.CASCADE
+    )
 
 
 # class Realty(Asset):
