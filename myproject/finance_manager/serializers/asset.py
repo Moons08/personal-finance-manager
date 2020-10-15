@@ -10,6 +10,7 @@ class StockSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         fields = ["id", "asset", "user", "ticker", "price", "shares"]
+        ordering = ["ticker"]
 
 
 class USStockSerializer(StockSerializer):
@@ -34,3 +35,29 @@ class AssetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Asset
         fields = ["id", "user", "name", "usstock", "kostock"]
+        ordering = ["id"]
+
+
+class ExpectAssetSerializer(serializers.Serializer):
+    """
+    {
+        "present_value": 5000,
+        "future_value": 5500,
+        "monthly_input": 150,
+        "interest": 0.12,
+        "year": null
+    }
+    {
+        "present_value": 5000,
+        "future_value": null,
+        "monthly_input": 150,
+        "interest": 0.12,
+        "year": 3
+    }
+    """
+
+    present_value = serializers.FloatField(initial=5000)
+    future_value = serializers.FloatField()
+    monthly_input = serializers.IntegerField(initial=100)
+    interest = serializers.FloatField(initial=12)  # percent
+    year = serializers.IntegerField(initial=3)
