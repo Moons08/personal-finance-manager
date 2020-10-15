@@ -1,14 +1,24 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import base_views, asset_views
+from .views import user_views, article_views, asset_views
 
-app_name = "finance_manager"
+# app_name = "fm"
+
+router = DefaultRouter()
+router.register(r"users", user_views.UserViewSet)
+# board
+router.register(r"articles", article_views.ArticleViewSet)
+router.register(r"comments", article_views.CommentViewSet)
+# assets
+router.register(r"assets", asset_views.AssetViewSet)
+router.register(r"usstocks", asset_views.USStockViewSet)
+router.register(r"kostocks", asset_views.KOStockViewSet)
+# router.register(r"test", asset_views.get_expect_asset)
+
+# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    # base_views.py
-    path("", base_views.home, name="home"),
-    # asset_views.py
-    path("asset/create/", asset_views.asset_create, name="asset_create"),
-    path("asset/read/", asset_views.asset_read, name="asset_read"),
-    path("asset/modify/<int:asset_id>/", asset_views.asset_modify, name="asset_modify"),
-    path("asset/delete/<int:asset_id>/", asset_views.asset_delete, name="asset_delete"),
+    path("", include(router.urls)),
+    path("get_expect_asset/", asset_views.get_expect_asset),
 ]
