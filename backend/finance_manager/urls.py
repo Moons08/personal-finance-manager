@@ -2,12 +2,11 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import user_views, article_views, asset_views
+from .views import article_views, asset_views
 
 # app_name = "fm"
-
 router = DefaultRouter()
-router.register(r"users", user_views.UserViewSet)
+# router.register(r"users", user_views.UserViewSet)
 # board
 router.register(r"articles", article_views.ArticleViewSet)
 router.register(r"comments", article_views.CommentViewSet)

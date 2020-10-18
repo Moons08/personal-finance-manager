@@ -10,8 +10,8 @@ from django.urls import path, include
 # router.register(r"users", user_views.UserViewSet)
 
 urlpatterns = [
-    path(r"", include("finance_manager.urls")),
-    # path("", include(router.urls)),
+    path(r"common/", include("common.urls")),
+    path(r"finance_manager/", include("finance_manager.urls")),
     # admin
     path("api-auth/", include("rest_framework.urls")),
     path("admin/", admin.site.urls),
