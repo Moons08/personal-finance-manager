@@ -31,17 +31,17 @@ const sizes = {
     large: {
         height: '3rem',
         fontSize: '1.25rem',
-        paddingTop: '13px'
+        paddingTop: '7px'
     },
     medium: {
         height: '2.25rem',
         fontSize: '1rem',
-        paddingTop: '10px'
+        paddingTop: '5px'
     },
     small: {
         height: '1.75rem',
         fontSize: '0.875rem',
-        paddingTop: '5px'
+        paddingTop: '3px'
     },
 }
 
@@ -75,7 +75,8 @@ const StyledButton = styled.button`
     border-radius: 4px;
     cursor: pointer;
     padding-left: 1rem;
-    padding-right: 1rem; 
+    padding-right: 1rem;
+    font-family:'Noto Sans KR';
 
     /* 기타 */
     & + & {
