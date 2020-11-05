@@ -14,19 +14,12 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: #fca311;
-    margin: 0;
-  }
-`;
-
 const palette = {
   primary: '#fca311',
   secondary: '#14213d'
 }
 
-function Main() {
+export default function Main() {
   return (
     <>
     <Grid container style={{background: "#fca311"}}>
@@ -37,10 +30,7 @@ function Main() {
               <TextField id="" fullWidth label="이메일" />
               <TextField id="" fullWidth style={{marginTop: "12px"}} label="비밀번호" />
           </Grid>
-          <ButtonGroup>
-            <Button color="secondary" size="large" fullWidth css={css`margin-top: 20px; border-radius: 2rem; margin-bottom: 10px;`}>Enter</Button>
-            {/* <Button color="secondary" outline fullWidth>Secondary</Button> */}
-          </ButtonGroup>
+          <Button color="secondary" size="large" fullWidth css={css`margin-top: 20px; border-radius: 2rem; margin-bottom: 10px;`}>Enter</Button>
           <Box display="flex">
               <Box flexGrow={1}><Typography variant="span" style={{fontWeight: "600"}}>Sign Up</Typography></Box>
               <Box><Typography variant="span" style={{color: "#9e9e9e"}} justifyContent="flex-end">Forgot?</Typography></Box>
@@ -52,4 +42,5 @@ function Main() {
   );
 }
 
-export default Main;
+
+
