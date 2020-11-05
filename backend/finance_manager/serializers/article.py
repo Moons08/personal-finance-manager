@@ -3,7 +3,7 @@ from finance_manager.models.article import Article, Comment
 from rest_framework import serializers
 
 
-class CommentSerializer(serializers.HyperlinkedModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source="author.username")
 
     class Meta:
@@ -11,7 +11,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["id", "author", "article", "content"]
 
 
-class ArticleSerializer(serializers.HyperlinkedModelSerializer):
+class ArticleSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source="author.username")
     comments = CommentSerializer(
         many=True,
