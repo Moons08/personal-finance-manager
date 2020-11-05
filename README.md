@@ -32,7 +32,7 @@ docker-compose down --volumn # 볼륨까지
 
 # 실행 중 컨테이너 접속
 docker-compose exec django /bin/bash
-docker-compose exec django ./myproject/manage.py makemigrations # 명령어 실행
+docker-compose exec django ./backend/manage.py makemigrations # 명령어 실행
 ```
 
 ### 예정

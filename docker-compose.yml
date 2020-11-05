@@ -30,7 +30,7 @@ services:
       - -c
       - |
         /wait-for-it.sh db:5432 -t 10
-        python myproject/manage.py runserver 0:8000
+        python backend/manage.py runserver 0:8000
     volumes:
       - ./:/app/
 

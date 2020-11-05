@@ -4,3 +4,7 @@ djangorestframework
 markdown
 django-filter
 pygments
+dj-rest-auth
+django-allauth
+djangorestframework_simplejwt
+psycopg2-binary
