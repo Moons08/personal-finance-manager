@@ -2,6 +2,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions, viewsets, serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from finance_manager.serializers.asset_srzs import (
+    ExpectAssetSerializer,
+)
 
 
 class AssetScheduler:
