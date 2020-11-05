@@ -14,10 +14,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         view_name="comment-detail",
     )
 
-    assets = serializers.HyperlinkedRelatedField(
+    portfolio = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name="asset-detail",
+        view_name="portfolio-detail",
     )
     # usstock = serializers.HyperlinkedRelatedField(
     #     many=True,
@@ -35,7 +35,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             "id",
             "username",
-            "assets",
+            "portfolio",
             "articles",
             "comments",
             # "usstock",
