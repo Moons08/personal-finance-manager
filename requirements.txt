@@ -7,3 +7,4 @@ pygments
 dj-rest-auth
 django-allauth
 djangorestframework_simplejwt
+yfinance
