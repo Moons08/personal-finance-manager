@@ -1,40 +1,22 @@
 import React from 'react';
-import { css } from '@emotion/core';
-import Button from './components/Button/Button';
-import styled, { ThemeProvider } from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
-import LoginBox from './components/LoginBox';
+import { BrowserRouter, Router, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { css } from 'styled-components';
 
-const ButtonGroup = styled.div`
-  & + & {
-    margin-top: 1rem;
-  }
-`;
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: #fca311;
-  }
-`;
-
-const palette = {
-  primary: '#fca311',
-  secondary: '#14213d'
-}
+import BottomNavi from './components/BottomNavi/BottomNavi';
+import AppRoute from './routes/AppRoute.jsx';
 
 function App() {
+  
   return (
-    <>
-    <GlobalStyle />    
-    <ThemeProvider theme={{palette}}>
-      <LoginBox>
-        <ButtonGroup>
-          {/* <Button color="secondary" size="large" fullWidth>Enter</Button> */}
-          {/* <Button color="secondary" outline fullWidth>Secondary</Button> */}
-        </ButtonGroup>
-      </LoginBox>
-    </ThemeProvider>
-    </>
+    <div>
+      <BrowserRouter>
+        <BottomNavi />
+        <Switch>
+          <AppRoute />
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 }
 
