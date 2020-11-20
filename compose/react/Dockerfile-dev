@@ -1,9 +1,10 @@
 FROM node
 
-WORKDIR /app/frontend
-
+WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-ADD    frontend/    /app/frontend
+COPY package*.json /app/
 
 RUN npm install
-RUN ["npm", "start"]
+
+COPY frontend /app
+CMD ["npm", "start"]
