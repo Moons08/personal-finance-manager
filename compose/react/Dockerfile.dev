@@ -1,0 +1,13 @@
+FROM node:lts
+
+WORKDIR /app/
+ENV PATH /app/node_modules/.bin:$PATH
+
+# dependency
+COPY frontend/package*.json /app/
+RUN npm install
+
+# add app
+COPY frontend /app/
+
+CMD ["npm", "start"]

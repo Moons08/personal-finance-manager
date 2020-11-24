@@ -16,7 +16,7 @@ services:
   django:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile-dev
+      dockerfile: ./compose/django/Dockerfile.dev
     environment:
       - DJANGO_DEBUG=True
       - DJANGO_DB_HOST=db
@@ -34,17 +34,17 @@ services:
   react:
     build: 
       context: .
-      dockerfile: ./compose/react/Dockerfile-dev
+      dockerfile: ./compose/react/Dockerfile.dev
     environment:
       - NODE_ENV=development
     stdin_open: true
     tty: true
-    command: ["npm", "start"]
     ports:
       - "3000:3000"
     volumes:
-      - node_modules:/app/frontend/node_modules
-      - ./frontend:/app/frontend
+      - node_modules:/app/node_modules
+      - ./frontend:/app/
+    command: ["npm", "start"]
 
 volumes:
   django_sample_db_dev: {}
