@@ -14,8 +14,6 @@ from .views import (
     scheuduler_views,
 )
 
-from util import schema_view
-
 app_name = "fm"
 router = DefaultRouter()
 # # board
@@ -36,7 +34,4 @@ router.register(r"kostocks", info_views.KOStockInfoViewSet)
 urlpatterns = [
     path("", include(router.urls)),
     path("expect_asset/", scheuduler_views.get_expect_asset),
-    url(
-        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
-    ),
 ]
