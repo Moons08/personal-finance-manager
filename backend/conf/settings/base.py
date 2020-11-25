@@ -16,6 +16,8 @@ AUTH_USER_MODEL = "auth.User"
 SITE_ID = 1
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = "jwt-auth"
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# SESSION_COOKIE_AGE = 1209600  # twoweeks
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,7 +38,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.twitter",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
