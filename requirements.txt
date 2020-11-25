@@ -9,3 +9,4 @@ django-allauth
 djangorestframework_simplejwt
 yfinance
 psycopg2-binary
+drf-yasg
