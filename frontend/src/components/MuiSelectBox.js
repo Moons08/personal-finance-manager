@@ -7,7 +7,7 @@ const selectboxStyles = {
 }
 
 const MuiSelectBox = (props) => {
-    const { label, value, handleChange, disabled, variant, menuItemList } = props;
+    const { label, item, value, handleChange, disabled, variant, selectOptionList } = props;
 
     return (
         <TextField
@@ -16,12 +16,12 @@ const MuiSelectBox = (props) => {
             fullWidth
             value={value}
             disabled={disabled}
-            onChange={e => handleChange(e)}
+            //onChange={e => handleChange(e, item)}
             variant={variant}
             style={selectboxStyles}
             size="small"
         >
-            {menuItemList.map((i) => (
+            {selectOptionList.map((i) => (
                 <MenuItem
                     key={i.name}
                     value={i.id}
@@ -37,7 +37,7 @@ export default MuiSelectBox
 
 MuiSelectBox.defaultProps = {
     label: '',
-    menuItemList : [
+    selectOptionList : [
         { id: "month", name: "월별" },
         { id: "quarter", name: "분기별" },
         { id: "half", name: "반기별" },

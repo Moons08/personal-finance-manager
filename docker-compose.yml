@@ -10,11 +10,13 @@ services:
       - POSTGRES_USER=sampleuser
       - POSTGRES_PASSWORD=samplesecret
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    ports:
+      - "5432:5432"
 
   django:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile-dev
+      dockerfile: ./compose/django/Dockerfile.dev
     environment:
       - DJANGO_DEBUG=True
       - DJANGO_DB_HOST=db
@@ -25,29 +27,24 @@ services:
       - DJANGO_SECRET_KEY=dev_secret_key
     ports:
       - "8000:8000"
-    command:
-      - bash
-      - -c
-      - |
-        /wait-for-it.sh db:5432 -t 10
-        python backend/manage.py runserver 0:8000
     volumes:
-      - ./:/app/
+      - ./backend:/app/backend
+    entrypoint: ["sh", "backend/entrypoint.sh"]
 
   react:
     build: 
       context: .
-      dockerfile: ./compose/react/Dockerfile-dev
+      dockerfile: ./compose/react/Dockerfile.dev
     environment:
       - NODE_ENV=development
     stdin_open: true
     tty: true
-    command: ["npm", "start"]
     ports:
       - "3000:3000"
     volumes:
-      - node_modules:/app/frontend/node_modules
-      - ./frontend:/app/frontend
+      - node_modules:/app/node_modules
+      - ./frontend:/app/
+    command: ["npm", "start"]
 
 volumes:
   django_sample_db_dev: {}
