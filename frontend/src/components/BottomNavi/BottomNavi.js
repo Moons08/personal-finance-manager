@@ -24,7 +24,6 @@ export default function BottomNavi() {
               indicatorColor="secondary"
               textColor="secondary"
               aria-label="icon label tabs"
-              visible={false}
             >
               <Tab
                 icon={<AccountBalanceRoundedIcon />}

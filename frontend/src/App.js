@@ -11,10 +11,10 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <BottomNavi />
         <Switch>
           <AppRoute />
         </Switch>
-        <BottomNavi />
       </BrowserRouter>
     </div>
   );

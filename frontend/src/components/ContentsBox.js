@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const ContentsBoxBlock = styled.div`
     width: 100vh;
-    height: 74vh;
+    height: 80vh;
 
     position: relative;
     background: #eee;
