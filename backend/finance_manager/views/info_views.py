@@ -1,18 +1,18 @@
 from . import BaseViewSet
-from finance_manager.models.info import USStockInfo, KOStockInfo
+from finance_manager.models.info import StockInfo, StockPrice
 from finance_manager.serializers.info_srzs import (
-    USStockInfoSerializer,
-    KOStockInfoSerializer,
+    StockInfoSerializer,
+    StockPriceSerializer,
 )
 
 
-class USStockInfoViewSet(BaseViewSet):
+class StockInfoViewSet(BaseViewSet):
 
-    queryset = USStockInfo.objects.all()
-    serializer_class = USStockInfoSerializer
+    queryset = StockInfo.objects.all()
+    serializer_class = StockInfoSerializer
 
 
-class KOStockInfoViewSet(BaseViewSet):
+class StockPriceViewSet(BaseViewSet):
 
-    queryset = KOStockInfo.objects.all()
-    serializer_class = KOStockInfoSerializer
+    queryset = StockPrice.objects.all()
+    serializer_class = StockPriceSerializer

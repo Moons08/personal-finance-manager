@@ -1,11 +1,19 @@
 from rest_framework import serializers
 from finance_manager.models.portfolio import Portfolio
 
+from .asset_srzs import UserStockListSerializer, RealtySerializer
+
 
 class PortfolioSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
-    stocks = serializers.StringRelatedField(many=True)
-    realties = serializers.StringRelatedField(many=True)
+    user_stocks = UserStockListSerializer(many=True, read_only=True)
+    realties = RealtySerializer(many=True, read_only=True)
+
+    def get_total_asset(self, parameter_list):
+        """
+        docstring
+        """
+        pass
 
     class Meta:
         model = Portfolio
@@ -13,7 +21,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "name",
-            "stocks",
+            "user_stocks",
             "realties",
         ]
         ordering = ["id"]

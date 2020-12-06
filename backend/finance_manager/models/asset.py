@@ -1,43 +1,37 @@
 from django.db import models
 from finance_manager.models.portfolio import Portfolio
+from finance_manager.models.info import StockInfo
 from django.utils.timezone import now
 
 
 created_date = models.DateTimeField(default=now, editable=False)
 
 
-class Stock(models.Model):
+class UserStock(models.Model):
     """
-    자산: 주식
-    TODO: info 연계 - 시장별 환율계산 필요
+    유저자산: 주식
     """
 
-    UNITED_STATES = "US"
-    KOREA = "KO"
-    JAPAN = "JP"
-    MARKET = [
-        (UNITED_STATES, "UnitedStates"),
-        (KOREA, "Korea"),
-        (JAPAN, "Japan"),
-    ]
-
+    # portfolio
     port = models.ForeignKey(
         Portfolio,
-        related_name="stocks",
+        related_name="user_stocks",
         on_delete=models.CASCADE,
     )
-
-    # 시장 - 중국은 뭐지? zh?
-    market = models.CharField(max_length=2, choices=MARKET, default=UNITED_STATES)
-    # 종목명
-    ticker = models.CharField(max_length=10)
+    # 종목정보
+    stock = models.ForeignKey(
+        StockInfo,
+        related_name="user_stocks",
+        on_delete=models.CASCADE,
+        to_field="key",
+    )
     # 평단가
     avg_price = models.FloatField()
     # 주식수
     share = models.FloatField()
 
     def __str__(self):
-        return f"{self.market}, {self.ticker}, {self.avg_price}"
+        return f"{self.port}, {self.stock}, {self.avg_price}"
 
 
 class Realty(models.Model):
