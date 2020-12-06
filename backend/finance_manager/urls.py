@@ -22,11 +22,11 @@ router.register(r"comments", article_views.CommentViewSet)
 # # assets
 router.register(r"portfolio", portfolio_views.PortfolioViewSet)
 
-router.register(r"stocks", asset_views.StockViewSet)
+router.register(r"userstocks", asset_views.UserStockViewSet)
 router.register(r"realties", asset_views.RealtyViewSet)
 
-router.register(r"usstocks", info_views.USStockInfoViewSet)
-router.register(r"kostocks", info_views.KOStockInfoViewSet)
+router.register(r"stockinfo", info_views.StockInfoViewSet)
+router.register(r"stockprice", info_views.StockPriceViewSet)
 
 # router.register("get_expect_asset", scheuduler_views.get_expect_asset)
 

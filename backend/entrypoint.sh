@@ -21,6 +21,7 @@
 
 # check migration > migrate
 python backend/manage.py makemigrations
+python backend/manage.py makemigrations finance_manager
 python backend/manage.py migrate
 
 # load sample data
