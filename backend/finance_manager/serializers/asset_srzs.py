@@ -21,7 +21,7 @@ class UserStockListSerializer(serializers.ModelSerializer):
 
         # calculated value
         rep["present_value"] = rep["share"] * rep["close"]
-        rep["profit"] = rep["share"] * (rep["avg_price"] - rep["close"])
+        rep["profit"] = rep["share"] * (rep["close"] - rep["avg_price"])
 
         return rep
 
