@@ -17,18 +17,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     portfolio = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name="portfolio-detail",
+        view_name="fm:portfolio-detail",
     )
-    # usstock = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     view_name="usstock-detail",
-    # )
-    # kostock = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     view_name="kostock-detail",
-    # )
 
     class Meta:
         model = User

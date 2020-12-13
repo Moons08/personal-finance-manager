@@ -1,14 +1,15 @@
 from . import LargeResultsSetPagination, BaseViewSet
 
 from finance_manager.models.portfolio import Portfolio
-from finance_manager.models.asset import UserStock, Realty
+from finance_manager.models.asset import UserStock, UserRealty, UserCash
 from rest_framework.response import Response
 
 from finance_manager.serializers.portfolio_srzs import PortfolioSerializer
 from finance_manager.serializers.asset_srzs import (
     UserStockSerializer,
     UserStockListSerializer,
-    RealtySerializer,
+    UserRealtySerializer,
+    UserCashSerializer,
 )
 
 
@@ -24,7 +25,13 @@ class UserStockViewSet(BaseViewSet):
         return Response(serializer.data)
 
 
-class RealtyViewSet(BaseViewSet):
+class UserRealtyViewSet(BaseViewSet):
 
-    queryset = Realty.objects.all()
-    serializer_class = RealtySerializer
+    queryset = UserRealty.objects.all()
+    serializer_class = UserRealtySerializer
+
+
+class UserCashViewSet(BaseViewSet):
+
+    queryset = UserCash.objects.all()
+    serializer_class = UserCashSerializer
