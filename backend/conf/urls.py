@@ -5,7 +5,7 @@ from django.conf.urls import url
 from util import schema_view
 
 urlpatterns = [
-    path(r"", include("common.urls")),
+    path(r"account/", include("common.urls")),
     path(r"finance_manager/", include("finance_manager.urls")),
     # admin
     # path("api-auth/", include("rest_framework.urls")),
