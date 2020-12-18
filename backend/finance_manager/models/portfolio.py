@@ -1,12 +1,10 @@
 from django.db import models
 
-# from finance_manager.models.asset import Stock, Realty
-
 
 class Portfolio(models.Model):
     """
     유저 자산군 포트폴리오 (유저 -< 포폴)
-    - Portfolio -< Stock, Realty
+    - Portfolio -< Stock, UserRealty
     """
 
     user = models.ForeignKey(

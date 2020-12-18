@@ -15,14 +15,18 @@ router.register(r"users", user.UserViewSet)
 
 urlpatterns = [
     # custom user info
-    path("user_info/", include(router.urls)),
+    path("user_info/", include(router.urls), name="pfm_user_info"),
     # auth
+    path(
+        "registration/",
+        include("dj_rest_auth.registration.urls"),
+        name="rest_registration",
+    ),
     path("", include("dj_rest_auth.urls")),
-    path("registration/", include("dj_rest_auth.registration.urls")),
     # social
     path("facebook/", sc.FacebookLogin.as_view(), name="fb_login"),
-    path("twitter/", sc.TwitterLogin.as_view(), name="twitter_login"),
     path("facebook/connect/", sc.FacebookConnect.as_view(), name="fb_connect"),
+    path("twitter/", sc.TwitterLogin.as_view(), name="twitter_login"),
     path("twitter/connect/", sc.TwitterConnect.as_view(), name="twitter_connect"),
     path(
         "socialaccounts/", SocialAccountListView.as_view(), name="social_account_list"
