@@ -33,7 +33,15 @@ docker-compose down --volumn # 볼륨까지
 # 실행 중 컨테이너 접속
 docker-compose exec django /bin/bash
 docker-compose exec django ./backend/manage.py makemigrations # 명령어 실행
+
+# 테스트 실행
+docker-compose exec django ./backend/manage.py test
 ```
+
+### 테스트 코드 
+- 파일명 앞에 `test`를 붙여야 한다.
+- 테스트 함수명 맨 앞에 `test`를 붙여야 한다. 
+- 테스트 실행코드: `docker-compose exec django ./backend/manage.py test`
 
 ### 예정
 
