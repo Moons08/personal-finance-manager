@@ -5,7 +5,6 @@ from .factories import ArticleFactory, UserFactory
 class ArticleTestCase(TestCase):
     def setUp(self):
         self.author = UserFactory(username='author_name')
-        self.user = UserFactory(username='client_name')
 
     def test_article_get_list(self):
         response = self.get('/finance_manager/articles/')
