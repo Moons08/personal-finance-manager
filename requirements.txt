@@ -12,3 +12,5 @@ psycopg2-binary
 drf-yasg
 django-cors-headers
 django-test-plus
+Faker
+factory-boy
