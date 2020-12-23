@@ -1,27 +1,31 @@
 from rest_framework import serializers
-from finance_manager.models.asset import UserStock, Realty
-from .info_srzs import StockInfoSerializer
+from finance_manager.models.asset import UserStock, UserRealty, UserCash
+
+from .info_srzs import StockInfoSerializer, ExchangeRateSerializer
 
 
 class UserStockListSerializer(serializers.ModelSerializer):
     stock = StockInfoSerializer()
-    purchased_value = serializers.SerializerMethodField("get_purchased_value")
+    # purchased_value = serializers.SerializerMethodField("get_purchased_value")
 
-    def get_purchased_value(self, obj):
-        # 매입 기준 자산 계산
-        # TODO: to_representation으로 편입?
-        return obj.share * obj.avg_price
+    # def get_purchased_value(self, obj):
+    #     # 매입 기준 자산 계산
+    #     # TODO: to_representation으로 편입?
+    #     return obj.share * obj.avg_price
 
     def to_representation(self, obj):
         """Move fields from StockInfo to UserStock representation."""
         rep = super().to_representation(obj)
         info = rep.pop("stock")
-        for key in ["name", "close"]:
+        for key in ["name", "price", "ex_rate"]:
             rep[key] = info[key]
 
         # calculated value
-        rep["present_value"] = rep["share"] * rep["close"]
-        rep["profit"] = rep["share"] * (rep["close"] - rep["avg_price"])
+        rep["purchased_value"] = rep["share"] * rep["avg_price"] * rep["ex_rate"]
+        rep["present_value"] = rep["share"] * rep["price"] * rep["ex_rate"]
+        rep["profit"] = (
+            rep["share"] * (rep["price"] - rep["avg_price"]) * rep["ex_rate"]
+        )
 
         return rep
 
@@ -33,7 +37,7 @@ class UserStockListSerializer(serializers.ModelSerializer):
             "port",
             "avg_price",  # 매입가
             "share",  # 잔고수량
-            "purchased_value",  # 매입금액
+            # "purchased_value",  # 매입금액
             "stock",
         ]
 
@@ -55,27 +59,46 @@ class UserStockSerializer(serializers.ModelSerializer):
         return stock
 
 
-# def to_internal_value(self, data):
-#     """Move fields related to profile to their own profile dictionary."""
-#     userstock_internal = {}
-#     for key in StockInfoSerializer.Meta.fields:
-#         if key in data:
-#             userstock_internal[key] = data.pop(key)
-
-#     internal = super().to_internal_value(data)
-#     internal["stock"] = userstock_internal
-#     return internal
-
-
-class RealtySerializer(serializers.ModelSerializer):
+class UserRealtySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Realty
+        model = UserRealty
         fields = "__all__"
 
     def create(self, validated_data):
         user = validated_data.pop("user")
-        realty = Realty.objects.create(**validated_data)
-        return realty
+        userRealty = UserRealty.objects.create(**validated_data)
+        return userRealty
+
+    def to_representation(self, obj):
+        """Move fields from StockInfo to UserStock representation."""
+        rep = super().to_representation(obj)
+
+        # calculated value
+        rep["present_value"] = rep["sell_price"]
+        rep["profit"] = rep["sell_price"] - rep["buy_price"]
+
+        return rep
+
+
+class UserCashSerializer(serializers.ModelSerializer):
+    currency = ExchangeRateSerializer(read_only=True)
+
+    def create(self, validated_data):
+        user = validated_data.pop("user")
+        userCash = UserCash.objects.create(**validated_data)
+        return userCash
+
+    def to_representation(self, obj):
+        # 중복되는데.. 함수화 가능할지?
+        rep = super().to_representation(obj)
+        market = rep.pop("currency")
+        rep["currency"] = market["market"]
+        rep["balance_won"] = rep["balance"] * market["ex_rate"]
+        return rep
+
+    class Meta:
+        model = UserCash
+        fields = ["id", "port", "currency", "balance"]
 
 
 class ExpectAssetSerializer(serializers.Serializer):

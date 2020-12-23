@@ -1,5 +1,16 @@
 from rest_framework import serializers
-from finance_manager.models.info import StockInfo, StockPrice
+from finance_manager.models.info import StockInfo, StockPrice, ExchangeRate
+
+
+class ExchangeRateSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        user = validated_data.pop("user")
+        stock = ExchangeRate.objects.create(**validated_data)
+        return stock
+
+    class Meta:
+        model = ExchangeRate
+        fields = "__all__"
 
 
 class StockPriceSerializer(serializers.ModelSerializer):
@@ -11,20 +22,19 @@ class StockPriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockPrice
         fields = "__all__"
-        # fields = ["ticker", "price", "reg_date"]
 
 
 class StockInfoSerializer(serializers.ModelSerializer):
     prices = StockPriceSerializer(many=True, read_only=True)
+    market = ExchangeRateSerializer(read_only=True)
 
     class Meta:
         model = StockInfo
-        # fields = "__all__"
-        fields = ["key", "market", "ticker", "name", "prices"]
+        fields = "__all__"
+        # fields = ["key", "market", "ticker", "name", "prices"]
 
     def create(self, validated_data):
         user = validated_data.pop("user")
-        # prices = validated_data.pop("prices")
         stock = StockInfo.objects.create(**validated_data)
         return stock
 
@@ -32,9 +42,12 @@ class StockInfoSerializer(serializers.ModelSerializer):
         """flatten"""
         representation = super().to_representation(obj)
         prices = representation.pop("prices")
+        market = representation.pop("market")
         if prices:
             prices = prices[-1]  # 복수개
-            for key in ["close"]:
+            for key in ["price"]:
                 representation[key] = prices[key]
+
+        representation["ex_rate"] = market["ex_rate"]
 
         return representation

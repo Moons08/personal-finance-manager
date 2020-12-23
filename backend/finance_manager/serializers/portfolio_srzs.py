@@ -1,13 +1,18 @@
 from rest_framework import serializers
 from finance_manager.models.portfolio import Portfolio
 
-from .asset_srzs import UserStockListSerializer, RealtySerializer
+from .asset_srzs import (
+    UserStockListSerializer,
+    UserRealtySerializer,
+    UserCashSerializer,
+)
 
 
 class PortfolioSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     user_stocks = UserStockListSerializer(many=True, read_only=True)
-    realties = RealtySerializer(many=True, read_only=True)
+    user_realties = UserRealtySerializer(many=True, read_only=True)
+    user_cashs = UserCashSerializer(many=True, read_only=True)
 
     def to_representation(self, obj):
         """
@@ -30,8 +35,12 @@ class PortfolioSerializer(serializers.ModelSerializer):
         rep = super().to_representation(obj)
         rep = _get_total(rep, "user_stocks", to="pv")
         rep = _get_total(rep, "user_stocks", obj="profit")
-        # rep = _get_total(rep, "user_realties")
-        # rep["tot_val"] = rep["user_stocks_tot_val"] + rep["user_realties_tot_val"]
+        rep = _get_total(rep, "user_realties", to="pv")
+        rep = _get_total(rep, "user_realties", obj="profit")
+        rep["tot_pv"] = rep["user_stocks_tot_pv"] + rep["user_realties_tot_pv"]
+        rep["tot_profit"] = (
+            rep["user_stocks_tot_profit"] + rep["user_realties_tot_profit"]
+        )
 
         return rep
 
@@ -42,7 +51,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
             "user",
             "name",
             "user_stocks",
-            "realties",
+            "user_realties",
+            "user_cashs",
         ]
         ordering = ["id"]
-        # extra_kwargs = {"url": {"view_name": "fm:stocks-detail"}}
