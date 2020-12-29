@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from .models.article import Article, Comment
-from .models.asset import Stock, Realty
-from .models.info import USStockInfo, KOStockInfo
+from .models.asset import UserStock, UserRealty, UserCash
+from .models.info import ExchangeRate, StockInfo, StockPrice
 from .models.portfolio import Portfolio
 
 
@@ -17,24 +17,34 @@ class CommentAdmin(admin.ModelAdmin):
     model = Comment
 
 
-@admin.register(Stock)
-class StockAdmin(admin.ModelAdmin):
-    model = Stock
+@admin.register(UserStock)
+class UserStockAdmin(admin.ModelAdmin):
+    model = UserStock
 
 
-@admin.register(Realty)
-class RealtyAdmin(admin.ModelAdmin):
-    model = Realty
+@admin.register(UserRealty)
+class UserRealtyAdmin(admin.ModelAdmin):
+    model = UserRealty
 
 
-@admin.register(USStockInfo)
-class USStockInfoAdmin(admin.ModelAdmin):
-    model = USStockInfo
+@admin.register(UserCash)
+class UserCashAdmin(admin.ModelAdmin):
+    model = UserCash
 
 
-@admin.register(KOStockInfo)
-class KOStockInfoAdmin(admin.ModelAdmin):
-    model = KOStockInfo
+@admin.register(ExchangeRate)
+class ExchangeRateAdmin(admin.ModelAdmin):
+    model = ExchangeRate
+
+
+@admin.register(StockPrice)
+class StockPriceAdmin(admin.ModelAdmin):
+    model = StockPrice
+
+
+@admin.register(StockInfo)
+class StockInfoAdmin(admin.ModelAdmin):
+    model = StockInfo
 
 
 @admin.register(Portfolio)

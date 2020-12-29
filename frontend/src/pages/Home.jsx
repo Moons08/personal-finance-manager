@@ -91,6 +91,15 @@ function Company({name, image, devidend, date, month}) {
 }
 
 export default class Home extends React.Component {
+  componentDidMount() {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem('access_token')
+      }
+    }
+    console.log(config);
+  }
+
     render() {
       return (
         <>
