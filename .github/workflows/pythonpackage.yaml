@@ -18,19 +18,13 @@ jobs:
           - db: postgres
             db_user: sampleuser
             db_password: ''
-          - db: mysql
-            db_user: root
-            db_password: root
-
+            
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Start MySQL
-      if: matrix.db == 'mysql'
-      run: sudo systemctl start mysql.service
     - name: Start PostgreSQL
       if: matrix.db == 'postgres'
       run: |
