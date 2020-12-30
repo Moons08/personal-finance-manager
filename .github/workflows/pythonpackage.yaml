@@ -18,7 +18,7 @@ jobs:
           - db: postgres
             db_user: sampleuser
             db_password: ''
-            
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -41,7 +41,7 @@ jobs:
         DB_USER: ${{ matrix.db_user }}
         DB_PASSWORD: ${{ matrix.db_password }}
       run: |
-        coverage run --omit=*/tests/* --source=hc manage.py test
+        coverage run --omit=*/tests/* --source=hc backend/manage.py test
     - name: Coveralls
       if: matrix.db == 'postgres' && matrix.python-version == '3.8'
       run: coveralls
