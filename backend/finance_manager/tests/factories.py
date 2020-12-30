@@ -9,11 +9,11 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
 
-    username = 'test_username'
+    username = "test_username"
 
 
 class ArticleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Article
 
-    subject = factory.Faker('sentence')
+    subject = factory.Faker("sentence")
