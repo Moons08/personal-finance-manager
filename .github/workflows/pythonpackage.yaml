@@ -17,7 +17,7 @@ jobs:
         include:
           - db: postgres
             db_user: sampleuser
-            db_password: samplesecret
+            db_password: ''
           - db: mysql
             db_user: root
             db_password: root
@@ -28,11 +28,14 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Start MySQL
+      if: matrix.db == 'mysql'
+      run: sudo systemctl start mysql.service
     - name: Start PostgreSQL
       if: matrix.db == 'postgres'
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres createuser -s sampleuser -E samplesecret
+        sudo -u postgres createuser -s sampleuser
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
