@@ -16,8 +16,8 @@ jobs:
         python-version: [3.8]
         include:
           - db: postgres
-            db_user: runner
-            db_password: ''
+            db_user: sampleuser
+            db_password: samplesecret
           - db: mysql
             db_user: root
             db_password: root
@@ -35,7 +35,7 @@ jobs:
       if: matrix.db == 'postgres'
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres createuser -s runner
+        sudo -u postgres createuser -s sampleuser
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
