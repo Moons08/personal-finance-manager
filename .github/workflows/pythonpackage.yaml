@@ -44,8 +44,8 @@ jobs:
           pip install -r requirements.txt
       - name: Run Migrations # run migrations to create table in side car db container
         run: |
+          python backend/manage.py makemigrations
           python backend/manage.py migrate
-          python backend/manage.py migrate finance_manager
       - name: Run Test # running tests
         run: python backend/manage.py test
       - name: Run Server
