@@ -55,7 +55,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.twitter",
     "drf_yasg",
-    'corsheaders',
+    "corsheaders",
 ]
 
 LOCAL_APPS = [
@@ -68,7 +68,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -81,12 +81,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 
 CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
 ]
 
 # CORS_ORIGIN_WHITELIST = (
@@ -138,7 +138,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("DJANGO_DB_NAME", "sampledb"),
         "USER": os.environ.get("DJANGO_DB_USERNAME", "sampleuser"),
-        "PASSWORD": os.environ.get("DJANGO_DB_PASSWORD", "samplesecret"),
+        "PASSWORD": os.environ.get("DJANGO_DB_PASSWORD", ""),
         "HOST": os.environ.get("DJANGO_DB_HOST", "localhost"),
         "PORT": os.environ.get("DJANGO_DB_PORT", "5432"),
     }
@@ -184,5 +184,3 @@ if DEBUG:
     ALLOWED_HOSTS += [
         "*",
     ]
-
-
