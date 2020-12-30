@@ -12,8 +12,8 @@ import ContentsBox from '../components/ContentsBox';
 import TabPanel from '../components/TabPanel';
 import MuiSelectBox from '../components/MuiSelectBox';
 import Button from '../components/Button/Button';
-import BarChart from '../components/Chart/BarChart';
-import selectOptions from './selectOptions.js';
+import LineChart from '../components/Chart/LineChart';
+import selectOptions from '../selectOptions';
 
 const appBarStyles = {
   height: '45px',
@@ -107,19 +107,30 @@ export default function Compter() {
                     />
                   </Grid>
                   <Button color="secondary" fullWidth style={{height:'40px'}}>계산</Button>
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                연수
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                월별지불액
-              </TabPanel>
-          </ContentsBox>
-          <Grid>
-            <BarChart />
-          </Grid>
-        </ThemeProvider>
-      </Grid>
-      </>      
-  );
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <Typography variant="h6">현재 가진 정보로<br />현재의 자산 가치를 확인 해 보세요.</Typography>
+                    <Grid container style={{marginTop: "20px", marginBottom: "12px"}}>
+                      <TextField id="month-inv" variant="outlined" size="small" fullWidth label="월별 투자액" />
+                      <TextField id="year-int" variant="outlined" size="small" fullWidth style={{marginTop: "12px"}} label="연이율(%)" />
+                      <MuiSelectBox id="multi-int" variant="outlined" handleChange={{}} label="복리 계산" />
+                      <TextField id="now-prof" variant="outlined" size="small" fullWidth style={{marginTop: "12px"}} label="미래 가치" />
+                      <TextField id="years" variant="outlined" size="small" fullWidth style={{marginTop: "12px"}} label="연수" />
+                    </Grid>
+                    <Button color="secondary" fullWidth style={{height:'40px'}}>계산</Button>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                  연수
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                  월별지불액
+                </TabPanel>
+            </ContentsBox>
+            <Grid>
+              <LineChart />
+            </Grid>
+          </ThemeProvider>
+        </Grid>
+        </>      
+    );
 }

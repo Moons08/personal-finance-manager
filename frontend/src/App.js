@@ -7,11 +7,10 @@ import BottomNavi from './components/BottomNavi/BottomNavi';
 import AppRoute from './routes/AppRoute.jsx';
 
 function App() {
-  
   return (
     <div>
       <BrowserRouter>
-        <BottomNavi />
+        {localStorage.getItem("access_token") ? <BottomNavi /> : <></>}
         <Switch>
           <AppRoute />
         </Switch>
@@ -21,3 +20,4 @@ function App() {
 }
 
 export default App;
+
