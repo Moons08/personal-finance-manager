@@ -25,7 +25,7 @@ python backend/manage.py makemigrations finance_manager
 python backend/manage.py migrate
 
 # load sample data
-python backend/manage.py loaddata backend/init.json
+# python backend/manage.py loaddata backend/init.json
 
 # run server
 python backend/manage.py runserver 0:8000
