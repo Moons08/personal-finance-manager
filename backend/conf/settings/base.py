@@ -55,7 +55,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.twitter",
     "drf_yasg",
-    'corsheaders',
+    "corsheaders",
 ]
 
 LOCAL_APPS = [
@@ -68,7 +68,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -81,12 +81,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 
 CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
 ]
 
 # CORS_ORIGIN_WHITELIST = (
@@ -122,12 +122,14 @@ REST_FRAMEWORK = {
     #     "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     # ]
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ),
 }
 # Database
@@ -184,5 +186,3 @@ if DEBUG:
     ALLOWED_HOSTS += [
         "*",
     ]
-
-
