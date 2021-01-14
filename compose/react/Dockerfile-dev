@@ -1,9 +1,0 @@
-FROM node
-
-WORKDIR /app/frontend
-
-ENV PATH /app/node_modules/.bin:$PATH
-ADD    frontend/    /app/frontend
-
-RUN npm install
-RUN ["npm", "start"]

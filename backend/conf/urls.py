@@ -1,20 +1,28 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 
-# from rest_framework.routers import DefaultRouter
-# from finance_manager.views import user_views, article_views
-
-# # Create a router and register our viewsets with it.
-# router = DefaultRouter()
-# router.register(r"articles", article_views.ArticleViewSet)
-# router.register(r"users", user_views.UserViewSet)
+from util import schema_view
 
 urlpatterns = [
-    path(r"common/", include("common.urls")),
+    path(r"account/", include("common.urls")),
     path(r"finance_manager/", include("finance_manager.urls")),
     # admin
-    path("api-auth/", include("rest_framework.urls")),
+    # path("api-auth/", include("rest_framework.urls")),
     path("admin/", admin.site.urls),
+    url(
+        r"^swagger(?P<format>\.json|\.yaml)$",
+        schema_view.without_ui(cache_timeout=0),
+        name="schema-json",
+    ),
+    url(
+        r"^swagger/$",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    url(
+        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
+    ),
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)

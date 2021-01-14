@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const LoginBoxBlock = styled.div`
     width: 100%;
-    height: 40vh;
 
     position: relative;
     background: white;
@@ -12,7 +11,6 @@ const LoginBoxBlock = styled.div`
     box-shadow: 0 0 9px rgba(0, 0, 0, 0.04);
 
     margin: 0 auto;
-    margin-top: 60vh;
     padding-top: 30px;
     padding-bottom: 30px;
     padding-left: 20px;
@@ -22,8 +20,10 @@ const LoginBoxBlock = styled.div`
     flex-direction: column;
 `;
 
+let wHeight = window.innerHeight;
+
 function LoginBox({ children }) {
-    return <LoginBoxBlock>{ children }</LoginBoxBlock>
+    return <LoginBoxBlock style={{marginTop: wHeight-360}}>{ children }</LoginBoxBlock>
 }
 
 export default LoginBox;
