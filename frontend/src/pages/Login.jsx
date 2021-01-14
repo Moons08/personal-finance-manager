@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import styled, { ThemeProvider, css } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
+import { createBrowserHistory } from 'history';
 
 import Button from '../components/Button/Button';
 import LoginBox from '../components/LoginBox';
@@ -34,11 +35,12 @@ class Login extends React.Component {
     super(props);
     this.state = {
       isLogged: false,
-      id: "",
-      pw: ""
+      username: "",
+      password: "",
+      token: "",
     }
     this.handleChange = this.handleChange.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -47,14 +49,40 @@ class Login extends React.Component {
     })
   }
 
-  handleOnClick() {
-    if(this.state.id === "" || this.state.pw === "") {
-      alert('이메일과 비밀번호를 입력해주세요.')
+  onSubmit() {
+    if(this.state.username === "" || this.state.password === "") {
+      alert('아이디와 비밀번호를 입력해주세요.')
       return;
     } else {
-      this.state.isLogged = true;
-      console.log(this.state);
-    }    
+      fetch("http://localhost:8000/account/login/", {
+        method: "POST",
+        headers: {
+          "origin": "*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+        }),
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        if(response.access_token) {
+          window.localStorage.setItem("access_token", response.access_token);
+          this.setState({
+            isLogged: true,
+            token: localStorage.getItem("access_token")
+          })
+          alert(this.state.username + "님, 안녕하세요.")
+          this.props.history.push("/home");
+          console.log(localStorage.getItem("access_token"));
+        } else if (!response.access_token) {
+          alert("가입된 회원이 아닙니다.");
+          this.props.history.push("/join");
+        }
+      })
+    } 
   }
 
   render() {
@@ -63,18 +91,18 @@ class Login extends React.Component {
       <GlobalStyle />
       <Grid container style={{background: "#fca311"}}>
         <ThemeProvider theme={{palette}}>
-          <LoginBox>
+          <LoginBox style={{bottom: "0", width: "100%"}}>
             <Typography variant="h5" style={{fontWeight: "800"}}>로그인</Typography>
             <Grid container style={{marginTop: "20px", marginBottom: "20px"}}>
-                <TextField id="inputId" fullWidth type="email" label="이메일" name="id" onChange={this.handleChange} />
-                <TextField id="inputPw" fullWidth type="password" style={{marginTop: "12px"}} label="비밀번호" name="pw" onChange={this.handleChange} />
+                <TextField id="username" fullWidth label="아이디" name="username" onChange={this.handleChange} />
+                <TextField id="password" fullWidth type="password" style={{marginTop: "12px"}} label="비밀번호" name="password" onChange={this.handleChange} />
             </Grid>
             <Button 
               color="secondary" 
               size="large" 
               fullWidth 
               css={css`margin-top: 20px; border-radius: 2rem; margin-bottom: 10px;`} 
-              onClick={this.handleOnClick} 
+              onClick={this.onSubmit} 
             >로그인</Button>
             <Box display="flex" style={{paddingTop: '3px'}}>
                 <Box flexGrow={1}><a href="/join" style={{textDecoration: 'none'}}><Typography variant="span" style={{fontWeight: "600"}} >회원가입</Typography></a></Box>
