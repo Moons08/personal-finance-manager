@@ -14,7 +14,6 @@ const StyledTypography = styled.text`
     /* 공통 스타일 */
     @font-face {
         font-family:'Noto Sans KR';
-        // src: url(${require('../../fonts/NotoSansKR-Light.otf')})
     }
 
     ${colorStyles}
