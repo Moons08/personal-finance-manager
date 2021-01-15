@@ -8,6 +8,9 @@ class Article(models.Model):
     subject = models.CharField(max_length=200)
     content = models.TextField()
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.subject
 
