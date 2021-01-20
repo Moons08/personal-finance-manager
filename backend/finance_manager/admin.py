@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models.article import Article, Comment
 from .models.asset import UserStock, UserRealty, UserCash
-from .models.info import ExchangeRate, StockInfo, StockPrice
+from .models.info import Market, StockInfo, StockPrice
 from .models.portfolio import Portfolio
 
 
@@ -32,9 +32,9 @@ class UserCashAdmin(admin.ModelAdmin):
     model = UserCash
 
 
-@admin.register(ExchangeRate)
-class ExchangeRateAdmin(admin.ModelAdmin):
-    model = ExchangeRate
+@admin.register(Market)
+class MarketAdmin(admin.ModelAdmin):
+    model = Market
 
 
 @admin.register(StockPrice)

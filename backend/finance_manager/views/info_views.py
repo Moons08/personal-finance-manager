@@ -1,16 +1,16 @@
 from . import BaseViewSet
-from finance_manager.models.info import StockInfo, StockPrice, ExchangeRate
+from finance_manager.models.info import StockInfo, StockPrice, Market
 from finance_manager.serializers.info_srzs import (
     StockInfoSerializer,
     StockPriceSerializer,
-    ExchangeRateSerializer,
+    MarketSerializer,
 )
 
 
-class ExchangeRateViewSet(BaseViewSet):
+class MarketViewSet(BaseViewSet):
 
-    queryset = ExchangeRate.objects.all()
-    serializer_class = ExchangeRateSerializer
+    queryset = Market.objects.all()
+    serializer_class = MarketSerializer
 
 
 class StockInfoViewSet(BaseViewSet):

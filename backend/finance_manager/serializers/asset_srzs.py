@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from finance_manager.models.asset import UserStock, UserRealty, UserCash
 
-from .info_srzs import StockInfoSerializer, ExchangeRateSerializer
+from .info_srzs import StockInfoSerializer, MarketSerializer
 
 
 class UserStockListSerializer(serializers.ModelSerializer):
@@ -81,7 +81,7 @@ class UserRealtySerializer(serializers.ModelSerializer):
 
 
 class UserCashSerializer(serializers.ModelSerializer):
-    currency = ExchangeRateSerializer(read_only=True)
+    currency = MarketSerializer(read_only=True)
 
     def create(self, validated_data):
         user = validated_data.pop("user")

@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime
 
 
-class ExchangeRate(models.Model):
+class Market(models.Model):
     """
     화폐 대비 원화 환율(매일 종가 기준) / 통화별 레코드 한줄로 관리
      US: 1085.42
@@ -11,8 +11,8 @@ class ExchangeRate(models.Model):
     """
 
     market = models.CharField(max_length=5, primary_key=True)
-    ex_rate = models.FloatField()  # 종가 기준
-    reg_date: datetime.date = models.DateField(auto_created=True)
+    exchange_rate = models.FloatField()  # 종가 기준
+    exchange_date: datetime.date = models.DateField()
 
     def __str__(self):
         return f"{self.market}"
@@ -25,7 +25,7 @@ class StockInfo(models.Model):
 
     key = models.CharField(max_length=10, primary_key=True)  # USTSLA, KO005930
     market = models.ForeignKey(
-        ExchangeRate,
+        Market,
         related_name="stockinfos",
         on_delete=models.CASCADE,
         to_field="market",
@@ -49,7 +49,7 @@ class StockPrice(models.Model):
         to_field="key",
     )
     price = models.FloatField()  # 종가 기준
-    reg_date: datetime.date = models.DateField(auto_created=True)
+    date: datetime.date = models.DateField()
 
     def __str__(self):
         return f"{self.info}: {self.price}"

@@ -1,10 +1,10 @@
 from test_plus import TestCase
-from .factories import StockInfoFactory, ExchangeRateFactory
+from .factories import StockInfoFactory, MarketFactory
 
 
 class StockInfoTestCase(TestCase):
     def setUp(self):
-        self.market = ExchangeRateFactory()
+        self.market = MarketFactory()
 
     def test_stockinfo_get_list(self):
         response = self.get("/finance_manager/stockinfo/")
