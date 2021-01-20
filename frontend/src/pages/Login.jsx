@@ -91,7 +91,7 @@ class Login extends React.Component {
       <GlobalStyle />
       <Grid container style={{background: "#fca311"}}>
         <ThemeProvider theme={{palette}}>
-          <LoginBox>
+          <LoginBox style={{bottom: "0", width: "100%"}}>
             <Typography variant="h5" style={{fontWeight: "800"}}>로그인</Typography>
             <Grid container style={{marginTop: "20px", marginBottom: "20px"}}>
                 <TextField id="username" fullWidth label="아이디" name="username" onChange={this.handleChange} />

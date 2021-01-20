@@ -1,15 +1,15 @@
 from rest_framework import serializers
-from finance_manager.models.info import StockInfo, StockPrice, ExchangeRate
+from finance_manager.models.info import StockInfo, StockPrice, Market
 
 
-class ExchangeRateSerializer(serializers.ModelSerializer):
+class MarketSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = validated_data.pop("user")
-        stock = ExchangeRate.objects.create(**validated_data)
+        stock = Market.objects.create(**validated_data)
         return stock
 
     class Meta:
-        model = ExchangeRate
+        model = Market
         fields = "__all__"
 
 
@@ -26,7 +26,7 @@ class StockPriceSerializer(serializers.ModelSerializer):
 
 class StockInfoSerializer(serializers.ModelSerializer):
     prices = StockPriceSerializer(many=True, read_only=True)
-    # market = ExchangeRateSerializer(read_only=True)
+    market = MarketSerializer(read_only=True)
 
     class Meta:
         model = StockInfo
@@ -74,6 +74,6 @@ class StockInfoSerializerRP(serializers.ModelSerializer):
             for key in ["price"]:
                 representation[key] = prices[key]
 
-        representation["ex_rate"] = market["ex_rate"]
+        representation["exchange_rate"] = market["exchange_rate"]
 
         return representation

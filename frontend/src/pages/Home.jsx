@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import ContentsBox from '../components/ContentsBox';
@@ -16,6 +17,8 @@ import Facebook from '../img/facebook.png';
 import Google from '../img/google.png';
 import AWS from '../img/aws.png';
 import User from '../img/user.jpg';
+import PortfolioBox from '../components/PortfolioBox';
+import Button from '../components/Button/Button';
 
 const companys = [
   {
@@ -66,58 +69,111 @@ const styles = makeStyles((theme) => ({
   }
 }));
 
-function Company({name, image, devidend, date, month}) {
-  const classes = styles();
-  return (
-    <div>
-      <Card className={classes.root}>
-        <CardMedia 
-          image={image} 
-          className={classes.cover}
-        />
-        <CardContent className={classes.inner}>
-          <Box style={{display: 'flex'}}>
-            <Typography variant="span" style={{fontWeight: "600", color: '#fca311'}}>{name}</Typography>
-            <Typography variant="subtitle2">공시배당금: {devidend}</Typography>
-          </Box>
-          <Box style={{display: 'flex'}}>
-            <Typography variant="subtitle2">{date}</Typography>
-            <Typography variant="subtitle2">배당월: {month}</Typography>
-          </Box>
-        </CardContent>
-      </Card>
-    </div>
-  )
+const palette = {
+  primary: '#fca311',
+  secondary: '#14213d'
 }
 
+// function Company({name, image, devidend, date, month}) {
+//   const classes = styles();
+//   return (
+//     <div>
+//       <Card className={classes.root}>
+//         <CardMedia 
+//           image={image} 
+//           className={classes.cover}
+//         />
+//         <CardContent className={classes.inner}>
+//           <Box style={{display: 'flex'}}>
+//             <Typography variant="span" style={{fontWeight: "600", color: '#fca311'}}>{name}</Typography>
+//             <Typography variant="subtitle2">공시배당금: {devidend}</Typography>
+//           </Box>
+//           <Box style={{display: 'flex'}}>
+//             <Typography variant="subtitle2">{date}</Typography>
+//             <Typography variant="subtitle2">배당월: {month}</Typography>
+//           </Box>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   )
+// }
+
 export default class Home extends React.Component {
-  componentDidMount() {
-    const config = {
-      headers: {
-        Authorization: localStorage.getItem('access_token')
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      portExist: false,
+      addPort: false,
     }
-    console.log(config);
+    this.addPortfoiloBtn = this.addPortfoiloBtn.bind(this);
+    this.PortBoxClose = this.PortBoxClose.bind(this);
+    this.createPortfolio = this.createPortfolio.bind(this);
   }
 
-    render() {
+  addPortfoiloBtn(e) {
+    this.setState({
+      addPort: true
+    })
+  }
+
+  PortBoxClose(e) {
+    this.setState({
+      addPort: false
+    })
+  }
+
+  createPortfolio(e) {
+
+  }
+
+  render() {
+    const { portExist, addPort } = this.state;
       return (
         <>
           <Grid container>
-            <Grid container alignItems="center" style={{padding: '20px 35px', height: '104px'}}>
-              <Grid xs={9}>
-                <Box>
-                  <Typography style={{ color: "#424242" }} variant="span" gutterBottom>현재 Gil Dong님의 자산</Typography>
-                  <Typography style={{ color: "#fca311", fontWeight: "700" }} variant="h5" gutterBottom>￦ 5,000,000</Typography>
-                </Box>
+            <ThemeProvider theme={{palette}}>
+              <Grid container alignItems="center" style={{margin: '10px 24px', height: '50px'}}>
+                <Grid xs={11}>
+                  <Box>
+                    <Typography color={"#424242"} variant="h6" gutterBottom>포트폴리오</Typography>
+                  </Box>
+                </Grid>
+                <Grid item justify="flex-end">
+                  <Typography color={'primary'} variant="h4" style={{fontWeight:'700'}} gutterBottom onClick={this.addPortfoiloBtn}>+</Typography>
+                </Grid>
               </Grid>
-              <Grid item justify="flex-end">
-                <Avatar alt="user's face" src={User} style={{width: '60px', height: '60px'}}></Avatar>
-              </Grid>
-            </Grid>
-            <ContentsBox style={{justifyContent: 'space-between'}}>
-              {companys.map(element => <Company name={element.name} image={element.image} devidend={element.devidend} date={element.date} month={element.month} />)}            
-            </ContentsBox>
+              <ContentsBox style={{justifyContent: 'space-between'}}>
+                {portExist === false && <>
+                  <Grid style={{position: 'absolute', top: '50%', left: '50%', marginLeft: '-100px'}}>
+                    <Typography variant="subtitle1" gutterBottom><Box textAlign="center">등록된 포트폴리오가 없습니다.</Box></Typography>
+                  </Grid>
+                </>}
+                {addPort && <>
+                  <Box style={{justifyContent: 'center', alignItems: 'center', display: 'flex', height: '100%', borderRadius: '2rem'}}>
+                    <PortfolioBox>
+                      <Typography variant="h6" style={{fontWeight: "800"}}>포트폴리오 생성</Typography>
+                      <Grid container>
+                        <TextField id="port_nm" fullWidth label="생성할 포트폴리오 이름" name="port_nm" onChange={this.handleChange} />
+                      </Grid>
+                      <Typography variant="h6" style={{fontWeight: "800", marginTop: '20px'}}>자산 등록</Typography>
+                      <Grid container>
+                        <TextField id="company_nm" fullWidth label="회사명" name="company_nm" onChange={this.handleChange} />
+                        <TextField id="avg_price" fullWidth label="평균 단가" name="avg_price" onChange={this.handleChange} />
+                        <TextField id="amount" fullWidth label="수량" name="amount" onChange={this.handleChange} />
+                      </Grid>
+                      <Grid container spacing={2} style={{marginTop: '12px'}}>
+                        <Grid item xs={6}>
+                          <Button color="primary" size="large" type="submit" fullWidth onClick={this.createPortfolio}>확인</Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Button color="secondary" size="large" fullWidth onClick={this.PortBoxClose}>취소</Button>
+                        </Grid>
+                      </Grid>
+                    </PortfolioBox>
+                  </Box>
+                </>}
+              </ContentsBox>
+            </ThemeProvider>
           </Grid>
         </>
       );
