@@ -38,6 +38,32 @@ class StockInfoSerializer(serializers.ModelSerializer):
         stock = StockInfo.objects.create(**validated_data)
         return stock
 
+        return representation
+
+    def to_representation(self, obj):
+        """flatten"""
+        representation = super().to_representation(obj)
+        prices = representation.pop("prices")
+        market = representation.pop("market")
+        if prices:
+            prices = prices[-1]  # 복수개
+            for key in ["price"]:
+                representation[key] = prices[key]
+
+        # representation["ex_rate"] = market["ex_rate"]
+
+        return representation
+
+
+class StockInfoSerializerRP(serializers.ModelSerializer):
+    prices = StockPriceSerializer(many=True, read_only=True)
+    market = MarketSerializer(read_only=True)
+
+    class Meta:
+        model = StockInfo
+        fields = "__all__"
+        # fields = ["key", "market", "ticker", "name", "prices"]
+
     def to_representation(self, obj):
         """flatten"""
         representation = super().to_representation(obj)

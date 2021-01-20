@@ -33,6 +33,9 @@ class StockInfo(models.Model):
     ticker = models.CharField(max_length=10)  # TSLA, 005930
     name = models.CharField(max_length=20)  # 테슬라, 삼성전자
 
+    class Meta:
+        ordering = ["-key"]
+
     def __str__(self):
         return f"{self.market}: {self.name}"
 

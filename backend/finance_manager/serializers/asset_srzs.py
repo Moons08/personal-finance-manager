@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from finance_manager.models.asset import UserStock, UserRealty, UserCash
 
-from .info_srzs import StockInfoSerializer, MarketSerializer
+from .info_srzs import StockInfoSerializerRP, MarketSerializer
 
 
 class UserStockListSerializer(serializers.ModelSerializer):
-    stock = StockInfoSerializer()
+    stock = StockInfoSerializerRP()
     # purchased_value = serializers.SerializerMethodField("get_purchased_value")
 
     # def get_purchased_value(self, obj):
@@ -88,13 +88,13 @@ class UserCashSerializer(serializers.ModelSerializer):
         userCash = UserCash.objects.create(**validated_data)
         return userCash
 
-    def to_representation(self, obj):
-        # 중복되는데.. 함수화 가능할지?
-        rep = super().to_representation(obj)
-        market = rep.pop("currency")
-        rep["currency"] = market["market"]
-        rep["balance_won"] = rep["balance"] * market["ex_rate"]
-        return rep
+    # def to_representation(self, obj):
+    #     # 중복되는데.. 함수화 가능할지?
+    #     rep = super().to_representation(obj)
+    #     market = rep.pop("currency")
+    #     rep["currency"] = market["market"]
+    #     rep["balance_won"] = rep["balance"] * market["ex_rate"]
+    #     return rep
 
     class Meta:
         model = UserCash
