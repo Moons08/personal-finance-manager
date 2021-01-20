@@ -81,11 +81,7 @@ class UserRealtySerializer(serializers.ModelSerializer):
 
 
 class UserCashSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
-    # currency = ExchangeRateSerializer(read_only=True)
-=======
     currency = MarketSerializer(read_only=True)
->>>>>>> 05c530424336ce24026c6d63531cd9834cc22486
 
     def create(self, validated_data):
         user = validated_data.pop("user")
