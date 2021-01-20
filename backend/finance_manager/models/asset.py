@@ -1,7 +1,7 @@
 from django.db import models
 from finance_manager.models.portfolio import Portfolio
 from finance_manager.models.info import StockInfo
-from finance_manager.models.info import ExchangeRate
+from finance_manager.models.info import Market
 from django.utils.timezone import now
 
 
@@ -79,7 +79,7 @@ class UserCash(models.Model):
         on_delete=models.CASCADE,
     )
     currency = models.ForeignKey(
-        ExchangeRate,
+        Market,
         related_name="user_cashs",
         on_delete=models.CASCADE,
         to_field="market",
