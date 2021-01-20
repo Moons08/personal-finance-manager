@@ -9,8 +9,6 @@ from finance_manager.models.asset import UserStock
 from finance_manager.models.portfolio import Portfolio
 from finance_manager.models.info import StockInfo, StockPrice, Market
 
-# fake = faker.Faker()
-
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -42,3 +40,10 @@ class StockInfoFactory(factory.django.DjangoModelFactory):
 
     market = factory.SubFactory(MarketFactory)
     key = factory.fuzzy.FuzzyText(length=10)
+
+
+class PortfolioFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Portfolio
+
+    name = factory.Faker("sentence")
