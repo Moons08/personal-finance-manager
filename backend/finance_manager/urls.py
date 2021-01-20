@@ -1,10 +1,5 @@
 from django.urls import path, include
-from django.conf.urls import url
-
 from rest_framework.routers import DefaultRouter
-from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .views import (
     article_views,
@@ -22,11 +17,13 @@ router.register(r"comments", article_views.CommentViewSet)
 # # assets
 router.register(r"portfolio", portfolio_views.PortfolioViewSet)
 
-router.register(r"stocks", asset_views.StockViewSet)
-router.register(r"realties", asset_views.RealtyViewSet)
+router.register(r"userstocks", asset_views.UserStockViewSet)
+router.register(r"userrealties", asset_views.UserRealtyViewSet)
+router.register(r"usercash", asset_views.UserCashViewSet)
 
-router.register(r"usstocks", info_views.USStockInfoViewSet)
-router.register(r"kostocks", info_views.KOStockInfoViewSet)
+router.register(r"stockinfo", info_views.StockInfoViewSet)
+router.register(r"stockprice", info_views.StockPriceViewSet)
+router.register(r"market", info_views.MarketViewSet)
 
 # router.register("get_expect_asset", scheuduler_views.get_expect_asset)
 

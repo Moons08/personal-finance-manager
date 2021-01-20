@@ -14,7 +14,7 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 class BaseViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     pagination_class = LargeResultsSetPagination
 
     def perform_create(self, serializer):

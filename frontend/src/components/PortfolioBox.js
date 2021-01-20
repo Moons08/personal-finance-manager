@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LoginBoxBlock = styled.div`
+const PortfolioBoxBlock = styled.div`
     position: fixed;
     background: white;
-    border-top-left-radius: 2rem;
-    border-top-right-radius: 2rem;
+    border-radius: 2rem;
     box-shadow: 0 0 9px rgba(0, 0, 0, 0.04);
 
     margin: 0 auto;
@@ -18,8 +17,8 @@ const LoginBoxBlock = styled.div`
     flex-direction: column;
 `;
 
-function LoginBox({ children }) {
-    return <LoginBoxBlock>{ children }</LoginBoxBlock>
+function PortfolioBox({ children }) {
+    return <PortfolioBoxBlock>{ children }</PortfolioBoxBlock>
 }
 
-export default LoginBox;
+export default PortfolioBox;
