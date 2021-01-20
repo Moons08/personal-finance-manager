@@ -57,7 +57,7 @@ class StockInfoSerializer(serializers.ModelSerializer):
 
 class StockInfoSerializerRP(serializers.ModelSerializer):
     prices = StockPriceSerializer(many=True, read_only=True)
-    market = ExchangeRateSerializer(read_only=True)
+    market = MarketSerializer(read_only=True)
 
     class Meta:
         model = StockInfo
