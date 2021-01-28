@@ -71,7 +71,8 @@ const styles = makeStyles((theme) => ({
 
 const palette = {
   primary: '#fca311',
-  secondary: '#14213d'
+  secondary: '#14213d',
+  third: '#ffffff'
 }
 
 // function Company({name, image, devidend, date, month}) {
