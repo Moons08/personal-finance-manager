@@ -11,7 +11,7 @@ class Portfolio(models.Model):
         "auth.User", related_name="portfolio", on_delete=models.CASCADE
     )
 
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     class Meta:
         ordering = ["-id"]
