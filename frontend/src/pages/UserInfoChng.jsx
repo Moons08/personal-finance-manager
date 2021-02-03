@@ -44,7 +44,7 @@ class UserInfoChng extends React.Component {
   // 회원가입
   handleUserInfoChngClick() {
     //e.preventDefault();
-    if(this.state.password1 == "" || this.state.password2 == "" || this.state.email == "") {
+    if(this.state.password1 === "" || this.state.password2 === "" || this.state.email === "") {
       alert('누락된 정보가 있습니다. 빠짐없이 입력해 주세요.');
       return;
     } else {
@@ -97,8 +97,4 @@ class UserInfoChng extends React.Component {
     );
   }
 }
-
 export default UserInfoChng;
-
-
-
