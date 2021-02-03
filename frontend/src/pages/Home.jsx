@@ -71,7 +71,9 @@ const styles = makeStyles((theme) => ({
 
 const palette = {
   primary: '#fca311',
-  secondary: '#14213d'
+  secondary: '#14213d',
+  third: '#ffffff',
+  fourth: '#ddd'
 }
 
 // function Company({name, image, devidend, date, month}) {
@@ -104,6 +106,7 @@ export default class Home extends React.Component {
     this.state = {
       portExist: false,
       addPort: false,
+      portNm: "",
     }
     this.addPortfoiloBtn = this.addPortfoiloBtn.bind(this);
     this.PortBoxClose = this.PortBoxClose.bind(this);
@@ -123,7 +126,25 @@ export default class Home extends React.Component {
   }
 
   createPortfolio(e) {
-
+    if(this.state.portNm === "") {
+      alert('포트폴리오명을 입력해주세요.')
+      return;
+    } else {
+      fetch("http://localhost:8000/finance_manager/portfolio/", {
+        method: "GET",
+        headers: {
+          "origin": "*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          portNm: this.state.portNm
+        }),
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+      }) 
+    }       
   }
 
   render() {
@@ -133,7 +154,7 @@ export default class Home extends React.Component {
           <Grid container>
             <ThemeProvider theme={{palette}}>
               <Grid container alignItems="center" style={{margin: '10px 24px', height: '50px'}}>
-                <Grid xs={11}>
+                <Grid item xs={11}>
                   <Box>
                     <Typography color={"#424242"} variant="h6" gutterBottom>포트폴리오</Typography>
                   </Box>
@@ -149,18 +170,18 @@ export default class Home extends React.Component {
                   </Grid>
                 </>}
                 {addPort && <>
-                  <Box style={{justifyContent: 'center', alignItems: 'center', display: 'flex', height: '100%', borderRadius: '2rem'}}>
+                  <Box style={{justifyContent: 'center', alignItems: 'center', display: 'flex', height: '100%', borderRadius: '2rem', width: '100%'}}>
                     <PortfolioBox>
                       <Typography variant="h6" style={{fontWeight: "800"}}>포트폴리오 생성</Typography>
                       <Grid container>
                         <TextField id="port_nm" fullWidth label="생성할 포트폴리오 이름" name="port_nm" onChange={this.handleChange} />
                       </Grid>
-                      <Typography variant="h6" style={{fontWeight: "800", marginTop: '20px'}}>자산 등록</Typography>
+                      {/* <Typography variant="h6" style={{fontWeight: "800", marginTop: '20px'}}>자산 등록</Typography>
                       <Grid container>
                         <TextField id="company_nm" fullWidth label="회사명" name="company_nm" onChange={this.handleChange} />
                         <TextField id="avg_price" fullWidth label="평균 단가" name="avg_price" onChange={this.handleChange} />
                         <TextField id="amount" fullWidth label="수량" name="amount" onChange={this.handleChange} />
-                      </Grid>
+                      </Grid> */}
                       <Grid container spacing={2} style={{marginTop: '12px'}}>
                         <Grid item xs={6}>
                           <Button color="primary" size="large" type="submit" fullWidth onClick={this.createPortfolio}>확인</Button>
