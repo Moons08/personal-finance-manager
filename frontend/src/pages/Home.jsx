@@ -71,9 +71,7 @@ const styles = makeStyles((theme) => ({
 
 const palette = {
   primary: '#fca311',
-  secondary: '#14213d',
-  third: '#ffffff',
-  fourth: '#ddd'
+  secondary: '#14213d'
 }
 
 // function Company({name, image, devidend, date, month}) {
@@ -126,6 +124,7 @@ export default class Home extends React.Component {
   }
 
   createPortfolio(e) {
+    e.preventDefault();
     if(this.state.portNm === "") {
       alert('포트폴리오명을 입력해주세요.')
       return;
