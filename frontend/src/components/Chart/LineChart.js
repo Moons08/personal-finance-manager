@@ -23,7 +23,7 @@ const data = {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40, 60, 65, 69]
+            data: [60, 50, 80, 81, 56, 55, 40, 60, 65, 69]
         }
     ]
 }
@@ -32,11 +32,15 @@ export default class LineChart extends React.Component {
     render() {
         return (
             <div>
-                <h2>Example</h2>
-                <Line ref="chart" data={data} />
+                <Line ref="chart" chartData={data} width={100} height={250} options={{ maintainAspectRatio: false }} />
             </div>
         );
     }
+
+    // componentDidMount() {
+    //     const { datasets } = this.refs.chart.chartInstance.data
+    //     console.log(datasets[0].data);
+    // }
 }
 
 

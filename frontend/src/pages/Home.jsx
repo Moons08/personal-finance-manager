@@ -1,22 +1,16 @@
 import React from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import ContentsBox from '../components/ContentsBox';
 import Apple from '../img/apple.png';
 import Facebook from '../img/facebook.png';
 import Google from '../img/google.png';
 import AWS from '../img/aws.png';
-import User from '../img/user.jpg';
 import PortfolioBox from '../components/PortfolioBox';
 import Button from '../components/Button/Button';
 
@@ -76,41 +70,18 @@ const palette = {
   fourth: '#ddd'
 }
 
-// function Company({name, image, devidend, date, month}) {
-//   const classes = styles();
-//   return (
-//     <div>
-//       <Card className={classes.root}>
-//         <CardMedia 
-//           image={image} 
-//           className={classes.cover}
-//         />
-//         <CardContent className={classes.inner}>
-//           <Box style={{display: 'flex'}}>
-//             <Typography variant="span" style={{fontWeight: "600", color: '#fca311'}}>{name}</Typography>
-//             <Typography variant="subtitle2">공시배당금: {devidend}</Typography>
-//           </Box>
-//           <Box style={{display: 'flex'}}>
-//             <Typography variant="subtitle2">{date}</Typography>
-//             <Typography variant="subtitle2">배당월: {month}</Typography>
-//           </Box>
-//         </CardContent>
-//       </Card>
-//     </div>
-//   )
-// }
-
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       portExist: false,
       addPort: false,
-      portNm: "",
+      name: "",
     }
     this.addPortfoiloBtn = this.addPortfoiloBtn.bind(this);
     this.PortBoxClose = this.PortBoxClose.bind(this);
     this.createPortfolio = this.createPortfolio.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   addPortfoiloBtn(e) {
@@ -125,19 +96,27 @@ export default class Home extends React.Component {
     })
   }
 
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+    console.log(this.state);
+  } 
+
   createPortfolio(e) {
-    if(this.state.portNm === "") {
+    if(this.state.name === "") {
       alert('포트폴리오명을 입력해주세요.')
       return;
     } else {
       fetch("http://localhost:8000/finance_manager/portfolio/", {
-        method: "GET",
+        method: "POST",
         headers: {
           "origin": "*",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          portNm: this.state.portNm
+          name: this.state.name
         }),
       })
       .then(response => response.json())
@@ -174,7 +153,7 @@ export default class Home extends React.Component {
                     <PortfolioBox>
                       <Typography variant="h6" style={{fontWeight: "800"}}>포트폴리오 생성</Typography>
                       <Grid container>
-                        <TextField id="port_nm" fullWidth label="생성할 포트폴리오 이름" name="port_nm" onChange={this.handleChange} />
+                        <TextField id="name" fullWidth label="생성할 포트폴리오 이름" name="name" onChange={this.handleChange} />
                       </Grid>
                       {/* <Typography variant="h6" style={{fontWeight: "800", marginTop: '20px'}}>자산 등록</Typography>
                       <Grid container>
