@@ -106,11 +106,12 @@ export default class Home extends React.Component {
     this.state = {
       portExist: false,
       addPort: false,
-      portNm: "",
+      name: "",
     }
     this.addPortfoiloBtn = this.addPortfoiloBtn.bind(this);
     this.PortBoxClose = this.PortBoxClose.bind(this);
     this.createPortfolio = this.createPortfolio.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   addPortfoiloBtn(e) {
@@ -125,19 +126,27 @@ export default class Home extends React.Component {
     })
   }
 
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+    console.log(this.state);
+  } 
+
   createPortfolio(e) {
-    if(this.state.portNm === "") {
+    if(this.state.name === "") {
       alert('포트폴리오명을 입력해주세요.')
       return;
     } else {
       fetch("http://localhost:8000/finance_manager/portfolio/", {
-        method: "GET",
+        method: "POST",
         headers: {
           "origin": "*",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          portNm: this.state.portNm
+          name: this.state.name
         }),
       })
       .then(response => response.json())
@@ -174,7 +183,7 @@ export default class Home extends React.Component {
                     <PortfolioBox>
                       <Typography variant="h6" style={{fontWeight: "800"}}>포트폴리오 생성</Typography>
                       <Grid container>
-                        <TextField id="port_nm" fullWidth label="생성할 포트폴리오 이름" name="port_nm" onChange={this.handleChange} />
+                        <TextField id="name" fullWidth label="생성할 포트폴리오 이름" name="name" onChange={this.handleChange} />
                       </Grid>
                       {/* <Typography variant="h6" style={{fontWeight: "800", marginTop: '20px'}}>자산 등록</Typography>
                       <Grid container>
