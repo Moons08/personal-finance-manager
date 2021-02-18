@@ -24,7 +24,6 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       
       redis:
-        # Docker Hub image
         image: redis:5.0.4
         # Set health checks to wait until redis has started
         options: >-
@@ -33,7 +32,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         env:
-          REDIS_HOST: redis_cache
+          REDIS_HOST: redis://redis_cache
         ports:
           - 6379:6379
 
@@ -48,12 +47,7 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-     
-      
-      # - name: Start Redis
-      #   uses: supercharge/redis-github-action@1.2.0
-      #   with:
-      #     redis-version: 5
+            ${{ runner.os }}-pip-         
       
       - name: Setup python environment # setting python environment to 3.x
         uses: actions/setup-python@v2
