@@ -14,3 +14,4 @@ django-cors-headers
 django-test-plus
 Faker
 factory-boy
+django-redis

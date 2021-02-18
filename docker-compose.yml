@@ -31,6 +31,16 @@ services:
       - ./backend:/app/backend
     entrypoint: ["sh", "backend/entrypoint.sh"]
 
+  redis_cache:
+    image: redis:5.0.4
+    restart: always
+    logging:
+      driver: none
+    volumes:
+      - redis_cache_data:/data:rw
+    ports:
+      - 6379:6379
+
   react:
     build: 
       context: .
@@ -49,3 +59,4 @@ services:
 volumes:
   django_sample_db_dev: {}
   node_modules: {}
+  redis_cache_data: {}
