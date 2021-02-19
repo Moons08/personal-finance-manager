@@ -25,12 +25,24 @@ services:
       - DJANGO_DB_USERNAME=sampleuser
       - DJANGO_DB_PASSWORD=samplesecret
       - DJANGO_SECRET_KEY=dev_secret_key
+      - REDIS_LOCATION=redis_cache
+      
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/app/backend
     entrypoint: ["sh", "backend/entrypoint.sh"]
 
+  redis_cache:
+    image: redis:5.0.4
+    restart: always
+    logging:
+      driver: none
+    volumes:
+      - redis_cache_data:/data:rw
+    ports:
+      - 6379:6379
+    
   react:
     build: 
       context: .
@@ -49,3 +61,4 @@ services:
 volumes:
   django_sample_db_dev: {}
   node_modules: {}
+  redis_cache_data: {}
